@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ログイン</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <a href="/auth/github">GitHubでログイン</a>
+  <% if(user) { %>
+  <p>現在 <%= user.username %> でログイン中</p>
+  <% } %>
+</body>
+</html>
