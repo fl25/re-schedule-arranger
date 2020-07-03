@@ -7,6 +7,30 @@ const helmet = require('helmet');
 const session = require('express-session');
 const passport = require('passport');
 
+// モデルの読み込み
+const User = require('./models/user');
+const Schedule = require('./models/schedule');
+const Availability = require('./models/availability');
+const Candidate = require('./models/candidate');
+const Comment = require('./models/comment');
+
+/**
+ * データベースにモデルを登録する関数
+ */
+const syncDb = async () => {
+  await User.sync();
+  Schedule.belongsTo(User, {foreignKey: 'createdBy'});
+  await Schedule.sync();
+  Comment.belongsTo(User, {foreignKey: 'userId'});
+  await Comment.sync();
+  Availability.belongsTo(User, {foreignKey: 'userId'});
+  await Candidate.sync();
+  Availability.belongsTo(Candidate, {foreignKey: 'candidateId'});
+  await Availability.sync();
+};
+
+syncDb();
+
 const GitHubStrategy = require('passport-github2').Strategy;
 
 const GITHUB_CLIENT_ID = '64b8d049ec7d60d85dc6';
@@ -29,7 +53,12 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => {
-        return done(null, profile);
+        User.upsert({
+          userId: profile.id,
+          username: profile.username
+        }).then(() => {
+          done(null, profile);
+        });
       });
     }
   )
