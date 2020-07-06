@@ -22,7 +22,8 @@
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "pug": "^3.0.0",
-    "sequelize": "^6.2.4"
+    "sequelize": "^6.2.4",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
