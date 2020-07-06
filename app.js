@@ -68,6 +68,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const schedulesRouter = require('./routes/schedules');
+const availabilityRouter = require('./routes/availabilities');
 
 const app = express();
 
@@ -96,6 +97,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/schedules', schedulesRouter);
+app.use('/schedules', availabilityRouter);
 
 app.get(
   '/auth/github',
